@@ -90,7 +90,11 @@ class _FlashlightHomeState extends State<FlashlightHome>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _stopAll();
+    // No setState here: the widget is being torn down.
+    _timer?.cancel();
+    _timer = null;
+    _lit = false;
+    Torch.set(false);
     super.dispose();
   }
 
